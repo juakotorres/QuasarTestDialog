@@ -7,6 +7,8 @@
         </q-toolbar-title>
         <q-space></q-space>
       </q-bar>
+
+      <div class="row items-center justify-center">Click outside to dismiss dialog</div>
     </q-card>
   </q-dialog>
 </template>
@@ -16,9 +18,15 @@ import { computed } from 'vue';
 
 import { confirmDiscard } from '../modules/confirmation_dialog';
 
-const props = defineProps<{
-  modelValue: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    modelValue: boolean,
+    fixedDialog?: boolean,
+  }>(),
+  {
+    fixedDialog: false,
+  },
+);
 
 const emits = defineEmits(['update:model-value']);
 
@@ -32,7 +40,7 @@ const opened = computed({
       return;
     }
 
-    confirmDiscard().onOk(() => {
+    confirmDiscard(props.fixedDialog).onOk(() => {
       emits('update:model-value', value);
     });
   },

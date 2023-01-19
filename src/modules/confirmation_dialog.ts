@@ -1,14 +1,10 @@
 import { Dialog } from 'quasar';
 
 import ConfirmationDialog from '../components/ConfirmationDialog.vue';
+import FixedConfirmationDialog from '../components/FixedConfirmationDialog.vue';
 
-export function confirmDiscard() {
+export function confirmDiscard(fixedDialog: boolean) {
   return Dialog.create({
-    component: ConfirmationDialog,
-    componentProps: {
-      dialogProps: {
-        persistent: true,
-      },
-    },
+    component: fixedDialog ? FixedConfirmationDialog : ConfirmationDialog,
   });
 }
